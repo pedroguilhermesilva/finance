@@ -17,6 +17,9 @@ export function TransactionTable() {
             <td className="deposit">R$ 12.000,00</td>
             <td>
               <select>
+                <option value="" disabled selected>
+                  Selecione
+                </option>
                 <option value="Todos" defaultChecked>
                   Todos
                 </option>
@@ -30,6 +33,9 @@ export function TransactionTable() {
             <td className="deposit">R$ 12.000,00</td>
             <td>
               <select>
+                <option value="" disabled selected>
+                  Selecione
+                </option>
                 <option value="Todos" defaultChecked>
                   Todos
                 </option>

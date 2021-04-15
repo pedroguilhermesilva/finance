@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
     width: 100%;
 
     th {
-      color: ${({ theme }) => theme.colors.darkGrey};
+      color: ${({ theme }) => theme.colors.gray};
       font-weight: 400;
       padding: 1rem 2rem;
       text-align: left;
@@ -33,6 +33,13 @@ export const Wrapper = styled.div`
 
       select {
         width: 8rem;
+        background: ${({ theme }) => theme.colors.primary};
+        border: none;
+        color: ${({ theme }) => theme.colors.darkGrey};
+
+        &:first-child {
+          color: ${({ theme }) => theme.colors.gray};
+        }
       }
     }
   }
