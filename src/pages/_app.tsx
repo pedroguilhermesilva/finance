@@ -5,6 +5,7 @@ import GlobalStyle from "../styles/global";
 import ThemeDefault from "../styles/themes/normal";
 
 import { Header } from "../components/Header";
+import { Container } from "../components/Container";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +13,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={ThemeDefault}>
         <GlobalStyle />
         <Header />
-        <Component {...pageProps} />
+        <Container>
+          <Component {...pageProps} />
+        </Container>
       </ThemeProvider>
     </>
   );

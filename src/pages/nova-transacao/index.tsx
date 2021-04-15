@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { TransactionTable } from "../../components/TransactionTable";
 
 import * as S from "./styles";
 
@@ -11,25 +12,8 @@ export default function NewTransaction() {
       </Head>
 
       <S.Wrapper>
-        <h1>Meses</h1>
-        <table>
-          <tr>
-            <th>Meses</th>
-            <th>Preço</th>
-            <th>Data salário</th>
-          </tr>
-          <tr>
-            <td>Maio</td>
-            <td>R$ 12.000,00</td>
-            <td>
-              <select>
-                <option value="Todos">Todos</option>
-                <option value="05-05">05/05/2021</option>
-                <option value="25-05">25/05/2021</option>
-              </select>
-            </td>
-          </tr>
-        </table>
+        <h1>Nova transação</h1>
+        <TransactionTable />
       </S.Wrapper>
     </>
   );

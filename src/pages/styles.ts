@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.main`
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 20px;
-
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
