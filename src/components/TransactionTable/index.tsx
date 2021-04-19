@@ -1,49 +1,72 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
 import * as S from "./styles";
+import { months, payments } from "./typeTable";
 
-export function TransactionTable() {
+export function TransactionTable({ type }) {
+  const [selectedOption, setSelectedOption] = useState("Todos");
+
+  const router = useRouter();
+  let tableType;
+
+  switch (type) {
+    case "months":
+      tableType = months;
+      break;
+    case "payments":
+      tableType = payments;
+      break;
+  }
+
+  function goToPage(value) {
+    router.push(`/transacoes/${value.target.innerText}`);
+  }
+
+  function changeValuesByMonth(e) {
+    console.log(e.target.value);
+  }
+
   return (
-    <S.Wrapper>
+    <S.Wrapper mouseNotPointer={type === "months"}>
       <table>
         <thead>
           <tr>
-            <th>Meses</th>
-            <th>Preço</th>
-            <th>Data salário</th>
+            {tableType?.title.map((menu, index) => (
+              <th key={index}>{menu}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Maio</td>
-            <td className="deposit">R$ 12.000,00</td>
-            <td>
-              <select>
-                <option value="" disabled selected>
-                  Selecione
-                </option>
-                <option value="Todos" defaultChecked>
-                  Todos
-                </option>
-                <option value="05-05">05/05/2021</option>
-                <option value="25-05">25/05/2021</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Abril</td>
-            <td className="deposit">R$ 12.000,00</td>
-            <td>
-              <select>
-                <option value="" disabled selected>
-                  Selecione
-                </option>
-                <option value="Todos" defaultChecked>
-                  Todos
-                </option>
-                <option value="05-05">05/05/2021</option>
-                <option value="25-05">25/05/2021</option>
-              </select>
-            </td>
-          </tr>
+          {type === "months" ? (
+            <>
+              {tableType?.value?.map((values, index) => (
+                <tr key={index}>
+                  <td onClick={goToPage}>{values.title}</td>
+                  <td className="deposit">{values.price}</td>
+                  <td>
+                    <select onChange={(value) => changeValuesByMonth(value)}>
+                      <option value="Todos" defaultChecked>
+                        Todos
+                      </option>
+                      <option value="05/05/2021">05/05/2021</option>
+                      <option value="25/05/2021">25/05/2021</option>
+                    </select>
+                  </td>
+                </tr>
+              ))}
+            </>
+          ) : (
+            <>
+              {tableType.value.map((values, index) => (
+                <tr key={index}>
+                  <td>{values.title}</td>
+                  <td className="deposit">{values.price}</td>
+                  <td>{values.category}</td>
+                  <td>{values.date}</td>
+                </tr>
+              ))}
+            </>
+          )}
         </tbody>
       </table>
     </S.Wrapper>

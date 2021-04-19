@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
     }
 
     label {
-      margin: 1rem 0 -0.5rem;
+      margin: 1rem 0 0.5rem;
       font-size: 0.8rem;
     }
 
@@ -38,10 +38,6 @@ export const Wrapper = styled.div`
       border: none;
       border-radius: 0.5rem;
       outline: none;
-    }
-
-    input:not(:first-child) {
-      margin: 1rem 0 0;
     }
 
     button {

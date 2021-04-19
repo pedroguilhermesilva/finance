@@ -12,7 +12,7 @@ export default function Home() {
 
       <S.Wrapper>
         <h1>Meses</h1>
-        <TransactionTable />
+        <TransactionTable type="months" />
       </S.Wrapper>
     </>
   );

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+interface mouseProps {
+  mouseNotPointer: boolean;
+}
+
+export const Wrapper = styled.div<mouseProps>`
   margin-top: 2rem;
   width: 100%;
 
@@ -20,8 +24,9 @@ export const Wrapper = styled.div`
       padding: 1rem 2rem;
       border: 0;
       background: ${({ theme }) => theme.colors.primary};
-      color: ${({ theme }) => theme.colors.background};
+      color: ${({ theme }) => theme.colors.gray};
       border-radius: 0.25rem;
+      cursor: ${(props) => (props.mouseNotPointer ? "pointer" : "auto")};
 
       &:first-child {
         color: ${({ theme }) => theme.colors.darkGrey};
@@ -36,9 +41,12 @@ export const Wrapper = styled.div`
         background: ${({ theme }) => theme.colors.primary};
         border: none;
         color: ${({ theme }) => theme.colors.darkGrey};
+        outline: none;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
 
-        &:first-child {
-          color: ${({ theme }) => theme.colors.gray};
+        option {
+          font-size: 1rem;
         }
       }
     }

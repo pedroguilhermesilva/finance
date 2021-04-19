@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+
 import * as S from "./styles";
 
 interface FormProps {
@@ -10,7 +11,7 @@ interface FormProps {
   category: string;
 }
 
-export default function NewTransaction() {
+export default function NewCategory() {
   const [date, setDate] = useState("");
 
   const {
@@ -29,11 +30,11 @@ export default function NewTransaction() {
   return (
     <>
       <Head>
-        <title>Nova Transação | Finance</title>
+        <title>Nova Categoria | Finance</title>
       </Head>
 
       <S.Wrapper>
-        <h1>Nova transação</h1>
+        <h1>Nova categoria</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             placeholder="Título"
@@ -42,32 +43,14 @@ export default function NewTransaction() {
             className={errors.title ? "errorForm" : ""}
           />
           {errors.title && <span>Por favor, preencha o campo título</span>}
-          <input
-            placeholder="Preço"
-            type="number"
-            {...register("price", { required: true })}
-            className={errors.price ? "errorForm" : ""}
-          />
-          {errors.price && <span>Por favor, preencha o campo preço</span>}
-          <label htmlFor="dateForm">Data da transação</label>
+          <label htmlFor="dateForm">Data de vencimento</label>
           <input
             placeholder="00/00/0000"
             type="date"
             onChange={(e) => setDate(e.target.value)}
             required
+            id="dateForm"
           />
-          <select
-            {...register("category", { required: true })}
-            className={errors.category ? "errorForm" : ""}
-          >
-            <option value="" defaultChecked>
-              Selecione a categoria
-            </option>
-            <option value="card-sueli-assai">Cartão Sueli Assaí</option>
-            <option value="card-sueli-itau">Cartão Sueli Itaú</option>
-            <option value="card-queiroz">Cartão Queiroz</option>
-          </select>
-          {errors.category && <span>Por favor, selecione uma categoria</span>}
           <button type="submit">Cadastrar</button>
         </form>
       </S.Wrapper>
