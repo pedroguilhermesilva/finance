@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
-import * as S from "./styles";
+import Wrapper from "./styles";
 
 interface FormProps {
   title: string;
@@ -40,7 +40,7 @@ export default function NewTransaction() {
         <title>Nova Transação | Finance</title>
       </Head>
 
-      <S.Wrapper>
+      <Wrapper>
         <h1>Nova transação</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -78,7 +78,7 @@ export default function NewTransaction() {
           {errors.category && <span>Por favor, selecione uma categoria</span>}
           <button type="submit">Cadastrar</button>
         </form>
-      </S.Wrapper>
+      </Wrapper>
     </>
   );
 }

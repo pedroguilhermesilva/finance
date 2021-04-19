@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { TransactionTable } from "../components/TransactionTable";
 
-import * as S from "./styles";
+import Wrapper from "./styles";
 
 export default function Home() {
   return (
@@ -10,10 +10,10 @@ export default function Home() {
         <title>Meses | Finance</title>
       </Head>
 
-      <S.Wrapper>
+      <Wrapper>
         <h1>Meses</h1>
         <TransactionTable type="months" />
-      </S.Wrapper>
+      </Wrapper>
     </>
   );
 }

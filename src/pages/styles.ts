@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,3 +12,5 @@ export const Wrapper = styled.div`
     color: ${({ theme }) => theme.colors.darkGrey};
   }
 `;
+
+export default Wrapper;

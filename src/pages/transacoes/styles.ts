@@ -3,13 +3,13 @@ interface MenuActiveProps {
   pathActive: string;
 }
 
-export const Wrapper = styled.div<MenuActiveProps>`
+const Wrapper = styled.div<MenuActiveProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: ${(props) =>
-    props.pathActive.indexOf("transacoes") >= 0 ? "9rem" : ""};
+    props.pathActive?.indexOf("transacoes") >= 0 ? "9rem" : ""};
 
   h1 {
     font-weight: 500;
@@ -17,3 +17,5 @@ export const Wrapper = styled.div<MenuActiveProps>`
     color: ${({ theme }) => theme.colors.darkGrey};
   }
 `;
+
+export default Wrapper;

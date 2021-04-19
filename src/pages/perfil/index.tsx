@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
-import * as S from "./styles";
+import Wrapper from "./styles";
 
 interface FormProps {
   name: string;
@@ -49,7 +49,7 @@ export default function Perfil() {
         <title>Meu Perfil | Finance</title>
       </Head>
 
-      <S.Wrapper>
+      <Wrapper>
         <h1>Meu Perfil</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -118,7 +118,7 @@ export default function Perfil() {
           )}
           <button type="submit">Cadastrar</button>
         </form>
-      </S.Wrapper>
+      </Wrapper>
     </>
   );
 }
