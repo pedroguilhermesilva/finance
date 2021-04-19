@@ -2,6 +2,34 @@ const months = {
   title: ["Meses", "Preço", "Data Salário"],
   value: [
     {
+      title: "Dezembro",
+      price: "R$: 12.000,00",
+    },
+    {
+      title: "Novembro",
+      price: "R$: 12.000,00",
+    },
+    {
+      title: "Outubro",
+      price: "R$: 12.000,00",
+    },
+    {
+      title: "Setembro",
+      price: "R$: 12.000,00",
+    },
+    {
+      title: "Agosto",
+      price: "R$: 12.000,00",
+    },
+    {
+      title: "Julho",
+      price: "R$: 12.000,00",
+    },
+    {
+      title: "Junho",
+      price: "R$: 12.000,00",
+    },
+    {
       title: "Maio",
       price: "R$: 12.000,00",
     },
@@ -10,15 +38,15 @@ const months = {
       price: "R$: 12.000,00",
     },
     {
-      title: "Junho",
+      title: "Março",
       price: "R$: 12.000,00",
     },
     {
-      title: "Julho",
+      title: "Fevereiro",
       price: "R$: 12.000,00",
     },
     {
-      title: "Agosto",
+      title: "Janeiro",
       price: "R$: 12.000,00",
     },
   ],

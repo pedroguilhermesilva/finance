@@ -6,8 +6,8 @@ import * as S from "./styles";
 import CardTotal from "../../components/CardTotal";
 
 export default function Transations() {
-  const router = useRouter();
-  const { transacoes } = router.query;
+  const { query, asPath } = useRouter();
+  const { transacoes } = query;
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function Transations() {
         <title>Nova Transação | Finance</title>
       </Head>
 
-      <S.Wrapper>
+      <S.Wrapper pathActive={asPath}>
         <CardTotal month={transacoes} />
         {/* <h1>Mês {transacoes}</h1> */}
         <TransactionTable type="payments" />

@@ -7,7 +7,7 @@ export function Header() {
   const { asPath } = useRouter();
 
   return (
-    <S.Header>
+    <S.Header pathActive={asPath}>
       <S.Wrapper>
         <Link href="/">
           <div className="icone">

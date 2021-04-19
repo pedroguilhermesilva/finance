@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body, input, button {
     font-family: 'Poppins', sans-serif;
+    outline:none;
   }
 
   a {

@@ -4,8 +4,10 @@ interface MenuActiveProps {
   pathActive: string;
 }
 
-export const Header = styled.header`
+export const Header = styled.header<MenuActiveProps>`
   background: ${({ theme }) => theme.colors.purple};
+  height: ${(props) =>
+    props.pathActive.indexOf("transacoes") >= 0 ? "15rem" : ""};
 `;
 
 export const Wrapper = styled.div`

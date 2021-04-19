@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { api } from "../../services/api";
 import * as S from "./styles";
 
 interface FormProps {
@@ -24,17 +25,22 @@ export default function Perfil() {
 
   const wacthField = watch(["salaryType"]);
 
-  const onSubmit = (data: FormProps) => {
+  const onSubmit = async (data: FormProps) => {
     let values;
 
     date2 !== ""
       ? (values = { ...data, date, date2 })
       : (values = { ...data, date });
 
-    console.log(values);
-    reset();
-    setDate("");
-    setDate2("");
+    try {
+      const response = await api.post("/register", values);
+      alert(`${response.data}`);
+      setDate("");
+      setDate2("");
+      reset();
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (

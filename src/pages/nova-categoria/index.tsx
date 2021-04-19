@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { api } from "../../services/api";
 
 import * as S from "./styles";
 
@@ -21,10 +22,16 @@ export default function NewCategory() {
     reset,
   } = useForm<FormProps>();
 
-  const onSubmit = (data: FormProps) => {
-    console.log({ ...data, date });
-    reset();
-    setDate("");
+  const onSubmit = async (data: FormProps) => {
+    const values = { ...data, date };
+    try {
+      const response = await api.post("/new-category", values);
+      alert(`${response.data}`);
+      setDate("");
+      reset();
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
