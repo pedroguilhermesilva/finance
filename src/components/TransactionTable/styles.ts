@@ -7,6 +7,7 @@ interface mouseProps {
 export const Wrapper = styled.div<mouseProps>`
   margin-top: 2rem;
   width: 100%;
+  overflow-x: auto;
 
   table {
     border-spacing: 0 0.5rem;
