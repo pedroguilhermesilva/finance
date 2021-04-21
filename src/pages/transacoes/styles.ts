@@ -8,7 +8,7 @@ const Wrapper = styled.div<MenuActiveProps>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: ${(props) =>
+  margin-top: ${(props) =>
     props.pathActive?.indexOf("transacoes") >= 0 ? "9rem" : ""};
 
   h1 {
