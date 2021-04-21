@@ -9,7 +9,7 @@ const Wrapper = styled.div<MenuActiveProps>`
   justify-content: center;
   align-items: center;
   margin-top: ${(props) =>
-    props.pathActive?.indexOf("transacoes") >= 0 ? "9rem" : ""};
+    props.pathActive?.indexOf("transacoes") >= 0 ? "-9rem" : ""};
 
   h1 {
     font-weight: 500;
