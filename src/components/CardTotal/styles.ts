@@ -17,6 +17,16 @@ export const Card = styled.div`
   border-radius: 0.8rem;
   background: ${({ theme }) => theme.colors.orange};
 
+  @media (max-width: 425px) {
+    p {
+      font-size: 2rem !important;
+    }
+  }
+
+  @media (max-width: 604px) {
+    width: 100%;
+  }
+
   p {
     color: ${({ theme }) => theme.colors.primary};
     font-size: 3rem;
@@ -28,7 +38,12 @@ export const Header = styled.div`
   justify-content: space-between;
   margin: 0 0 1.5rem;
 
+  @media (max-width: 604px) {
+    width: 100%;
+  }
+
   h1 {
+    text-transform: uppercase;
     color: ${({ theme }) => theme.colors.primary};
   }
 `;

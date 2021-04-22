@@ -18,6 +18,10 @@ const Wrapper = styled.div`
     width: 50%;
     margin: 1.5rem;
 
+    @media (max-width: 604px) {
+      width: 95%;
+    }
+
     .errorForm {
       border: 2px ${({ theme }) => theme.colors.red} solid;
     }

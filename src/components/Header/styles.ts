@@ -15,7 +15,7 @@ export const Header = styled.header<MenuActiveProps>`
 `;
 
 export const Wrapper = styled.div<statuMenuMobileProps>`
-  max-width: 6040px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 40px 20px;
 
@@ -31,13 +31,6 @@ export const Wrapper = styled.div<statuMenuMobileProps>`
   @media (max-width: 604px) {
     .menu-mobile-open {
       display: block;
-    }
-
-    .icone {
-      img,
-      p {
-        display: none;
-      }
     }
   }
 
@@ -100,40 +93,60 @@ export const StyledMenu = styled.nav`
   justify-content: center;
   background: ${({ theme }) => theme.colors.purple};
   height: 100vh;
-  text-align: left;
   padding: 2rem;
   position: absolute;
   top: 0;
   left: 0;
-  transition: transform 0.3s ease-in-out;
 
   .menu-mobile-close {
     position: absolute;
     top: 5%;
+    left: 2rem;
     color: ${({ theme }) => theme.colors.orange};
   }
 
   @media (max-width: 604px) {
     width: 100%;
   }
+`;
 
-  a {
-    font-size: 2rem;
-    text-transform: uppercase;
-    padding: 2rem 0;
-    font-weight: bold;
-    letter-spacing: 0.5rem;
-    color: ${({ theme }) => theme.colors.primary};
-    text-decoration: none;
-    transition: color 0.3s linear;
+export const LinksMobile = styled.a<MenuActiveProps>`
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding: 2rem 0;
+  font-weight: bold;
+  letter-spacing: 0.5rem;
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: none;
+  transition: color 0.3s linear;
 
-    @media (max-width: 604px) {
-      font-size: 1.5rem;
-      text-align: center;
-    }
+  @media (max-width: 604px) {
+    font-size: 1.5rem;
+    text-align: center;
+  }
 
-    &:hover {
-      color: ${({ theme }) => theme.colors.darkGrey};
-    }
+  ${(props) =>
+    (props.pathActive === props.href || props.href === "") &&
+    css`
+      font-weight: 600;
+      color: ${({ theme }) => theme.colors.orange};
+
+      /* &::after {
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        background: ${({ theme }) => theme.colors.orange};
+      } */
+    `}
+
+  :hover {
+    filter: brightness(0.6);
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.orange};
   }
 `;

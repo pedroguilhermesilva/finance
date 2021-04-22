@@ -34,18 +34,18 @@ export function Header() {
               onClick={() => setIsOpen(false)}
             />
 
-            <S.Links href="/" pathActive={asPath}>
+            <S.LinksMobile href="/" pathActive={asPath}>
               Meses
-            </S.Links>
-            <S.Links href="/nova-transacao" pathActive={asPath}>
+            </S.LinksMobile>
+            <S.LinksMobile href="/nova-transacao" pathActive={asPath}>
               Nova transação
-            </S.Links>
-            <S.Links href="/nova-categoria" pathActive={asPath}>
+            </S.LinksMobile>
+            <S.LinksMobile href="/nova-categoria" pathActive={asPath}>
               Nova categoria
-            </S.Links>
-            <S.Links href="/perfil" pathActive={asPath}>
+            </S.LinksMobile>
+            <S.LinksMobile href="/perfil" pathActive={asPath}>
               Perfil
-            </S.Links>
+            </S.LinksMobile>
 
             {/* <a href="/">
               <span role="img" aria-label="about us">
