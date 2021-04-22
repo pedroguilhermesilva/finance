@@ -23,6 +23,7 @@ const Wrapper = styled.div`
 
       input {
         width: 100%;
+        background: ${({ theme }) => theme.colors.primary};
       }
     }
 
