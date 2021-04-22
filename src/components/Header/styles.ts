@@ -25,7 +25,7 @@ export const Wrapper = styled.div<statuMenuMobileProps>`
 
   .menu-mobile-open {
     display: none;
-    color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.primary};
   }
 
   @media (max-width: 604px) {
