@@ -13,6 +13,7 @@ interface FormProps {
 
 export default function NewTransaction() {
   const [date, setDate] = useState("");
+  const [errorDateInput, setErrorDateInput] = useState(false);
 
   const {
     register,
@@ -33,6 +34,8 @@ export default function NewTransaction() {
       } catch (err) {
         alert(err.message);
       }
+    } else {
+      setErrorDateInput(true);
     }
   };
 
@@ -63,9 +66,14 @@ export default function NewTransaction() {
           <input
             placeholder="00/00/0000"
             type="date"
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => {
+              setDate(e.target.value),
+                errorDateInput && setErrorDateInput(false);
+            }}
             required
+            className={errorDateInput ? "errorForm" : ""}
           />
+          {errorDateInput && <span>Por favor, preencha o campo data</span>}
           <select
             {...register("category", { required: true })}
             className={errors.category ? "errorForm" : ""}

@@ -39,6 +39,10 @@ export const Wrapper = styled.div<mouseProps>`
         white-space: nowrap;
       }
 
+      &:last-child {
+        white-space: nowrap;
+      }
+
       select {
         width: 8rem;
         background: ${({ theme }) => theme.colors.primary};
