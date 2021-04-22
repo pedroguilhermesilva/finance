@@ -107,6 +107,7 @@ export const StyledMenu = styled.nav`
 
   @media (max-width: 604px) {
     width: 100%;
+    position: fixed;
   }
 `;
 
