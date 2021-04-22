@@ -22,15 +22,17 @@ export default function NewTransaction() {
   } = useForm<FormProps>();
 
   const onSubmit = async (data: FormProps) => {
-    const values = { ...data, date };
+    if (date !== "") {
+      const values = { ...data, date };
 
-    try {
-      const response = await api.post("/new-transaction", values);
-      alert(`${response.data}`);
-      setDate("");
-      reset();
-    } catch (err) {
-      alert(err.message);
+      try {
+        const response = await api.post("/new-transaction", { ...values });
+        alert(`${response.data}`);
+        setDate("");
+        reset();
+      } catch (err) {
+        alert(err.message);
+      }
     }
   };
 
