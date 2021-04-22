@@ -5,16 +5,15 @@ interface statuMenuMobileProps {
 }
 interface MenuActiveProps {
   pathActive: string;
-  isOpen?: statuMenuMobileProps;
 }
 
 export const Header = styled.header<MenuActiveProps>`
   background: ${({ theme }) => theme.colors.purple};
-  height: ${(props) =>
-    props.pathActive.indexOf("transacoes") >= 0 ? "15rem" : ""};
+  height: ${({ pathActive }) =>
+    pathActive.indexOf("transacoes") >= 0 ? "15rem" : ""};
 `;
 
-export const Wrapper = styled.div<statuMenuMobileProps>`
+export const Wrapper = styled.div`
   max-width: 1120px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -66,8 +65,8 @@ export const Links = styled.a<MenuActiveProps>`
     display: none;
   }
 
-  ${(props) =>
-    (props.pathActive === props.href || props.href === "") &&
+  ${({ pathActive, href }) =>
+    (pathActive === href || href === "") &&
     css`
       font-weight: 600;
 
@@ -87,7 +86,33 @@ export const Links = styled.a<MenuActiveProps>`
   }
 `;
 
-export const StyledMenu = styled.nav`
+export const LinksMobile = styled.a<MenuActiveProps>`
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding: 2rem 0;
+  font-weight: bold;
+  letter-spacing: 0.5rem;
+  color: ${({ theme }) => theme.colors.primary};
+  text-decoration: none;
+
+  @media (max-width: 604px) {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  ${({ pathActive, href }) =>
+    (pathActive === href || href === "") &&
+    css`
+      font-weight: 600;
+      color: ${({ theme }) => theme.colors.orange};
+    `}
+
+  :hover {
+    filter: brightness(0.6);
+  }
+`;
+
+export const MenuMobile = styled.nav<statuMenuMobileProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -97,11 +122,14 @@ export const StyledMenu = styled.nav`
   position: absolute;
   top: 0;
   left: 0;
+  transition: opacity 0.3s ease-in-out;
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  pointer-events: ${({ isOpen }) => (isOpen ? "all" : "none")};
 
   .menu-mobile-close {
     position: absolute;
-    top: 5%;
-    left: 2rem;
+    top: 2rem;
+    right: 2rem;
     color: ${({ theme }) => theme.colors.orange};
   }
 
@@ -109,45 +137,10 @@ export const StyledMenu = styled.nav`
     width: 100%;
     position: fixed;
   }
-`;
 
-export const LinksMobile = styled.a<MenuActiveProps>`
-  font-size: 2rem;
-  text-transform: uppercase;
-  padding: 2rem 0;
-  font-weight: bold;
-  letter-spacing: 0.5rem;
-  color: ${({ theme }) => theme.colors.primary};
-  text-decoration: none;
-  transition: color 0.3s linear;
-
-  @media (max-width: 604px) {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  ${(props) =>
-    (props.pathActive === props.href || props.href === "") &&
-    css`
-      font-weight: 600;
-      color: ${({ theme }) => theme.colors.orange};
-
-      /* &::after {
-        content: "";
-        height: 3px;
-        width: 100%;
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        background: ${({ theme }) => theme.colors.orange};
-      } */
-    `}
-
-  :hover {
-    filter: brightness(0.6);
-  }
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.orange};
+  ${LinksMobile} {
+    transform: ${({ isOpen }) =>
+      isOpen ? "translateY(0)" : "translateY(3rem)"};
+    transition: transform 0.3s ease-in-out;
   }
 `;

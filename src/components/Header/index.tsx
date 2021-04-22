@@ -12,7 +12,7 @@ export function Header() {
 
   return (
     <S.Header pathActive={asPath}>
-      <S.Wrapper isOpen={isOpen}>
+      <S.Wrapper>
         <FaAlignLeft
           className="menu-mobile-open"
           size={35}
@@ -26,47 +26,26 @@ export function Header() {
           </div>
         </Link>
 
-        {isOpen && (
-          <S.StyledMenu>
-            <FaTimes
-              className="menu-mobile-close"
-              size={35}
-              onClick={() => setIsOpen(false)}
-            />
+        <S.MenuMobile isOpen={isOpen}>
+          <FaTimes
+            className="menu-mobile-close"
+            size={35}
+            onClick={() => setIsOpen(false)}
+          />
 
-            <S.LinksMobile href="/" pathActive={asPath}>
-              Meses
-            </S.LinksMobile>
-            <S.LinksMobile href="/nova-transacao" pathActive={asPath}>
-              Nova transação
-            </S.LinksMobile>
-            <S.LinksMobile href="/nova-categoria" pathActive={asPath}>
-              Nova categoria
-            </S.LinksMobile>
-            <S.LinksMobile href="/perfil" pathActive={asPath}>
-              Perfil
-            </S.LinksMobile>
-
-            {/* <a href="/">
-              <span role="img" aria-label="about us">
-                &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-              </span>
-              About us
-            </a>
-            <a href="/">
-              <span role="img" aria-label="price">
-                &#x1f4b8;
-              </span>
-              Pricing
-            </a>
-            <a href="/">
-              <span role="img" aria-label="contact">
-                &#x1f4e9;
-              </span>
-              Contact
-            </a> */}
-          </S.StyledMenu>
-        )}
+          <S.LinksMobile href="/" pathActive={asPath}>
+            Meses
+          </S.LinksMobile>
+          <S.LinksMobile href="/nova-transacao" pathActive={asPath}>
+            Nova transação
+          </S.LinksMobile>
+          <S.LinksMobile href="/nova-categoria" pathActive={asPath}>
+            Nova categoria
+          </S.LinksMobile>
+          <S.LinksMobile href="/perfil" pathActive={asPath}>
+            Perfil
+          </S.LinksMobile>
+        </S.MenuMobile>
 
         <nav>
           <S.Links href="/" pathActive={asPath}>

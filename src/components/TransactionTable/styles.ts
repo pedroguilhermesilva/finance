@@ -27,7 +27,8 @@ export const Wrapper = styled.div<mouseProps>`
       background: ${({ theme }) => theme.colors.primary};
       color: ${({ theme }) => theme.colors.gray};
       border-radius: 0.25rem;
-      cursor: ${(props) => (props.mouseNotPointer ? "pointer" : "auto")};
+      cursor: ${({ mouseNotPointer }) =>
+        mouseNotPointer ? "pointer" : "auto"};
 
       &:first-child {
         color: ${({ theme }) => theme.colors.darkGrey};
@@ -35,6 +36,7 @@ export const Wrapper = styled.div<mouseProps>`
 
       &.deposit {
         color: ${({ theme }) => theme.colors.green};
+        white-space: nowrap;
       }
 
       select {
