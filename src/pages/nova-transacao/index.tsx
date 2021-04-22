@@ -73,9 +73,9 @@ export default function NewTransaction() {
             <option value="" defaultChecked>
               Selecione a categoria
             </option>
-            <option value="card-sueli-assai">Cartão Sueli Assaí</option>
-            <option value="card-sueli-itau">Cartão Sueli Itaú</option>
-            <option value="card-queiroz">Cartão Queiroz</option>
+            <option value="itau">Cartão Itau</option>
+            <option value="nubank">Cartão Nubank</option>
+            <option value="santander">Cartão Santander</option>
           </select>
           {errors.category && <span>Por favor, selecione uma categoria</span>}
           <button type="submit">Cadastrar</button>
