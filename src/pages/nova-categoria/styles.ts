@@ -20,6 +20,10 @@ const Wrapper = styled.div`
 
     @media (max-width: 604px) {
       width: 95%;
+
+      input {
+        width: 100%;
+      }
     }
 
     .errorForm {
