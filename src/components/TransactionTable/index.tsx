@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as S from "./styles";
+
+import formatCurrency from "../../utils/formatCurrency";
+import formatDate from "../../utils/formatDate";
+
 import { months, payments } from "./typeTable";
 
 export function TransactionTable({ type }) {
@@ -42,7 +46,7 @@ export function TransactionTable({ type }) {
               {tableType?.value?.map((values, index) => (
                 <tr key={index}>
                   <td onClick={goToPage}>{values.title}</td>
-                  <td className="deposit">{values.price}</td>
+                  <td className="deposit">{formatCurrency(values.price)}</td>
                   <td>
                     <select onChange={(value) => changeValuesByMonth(value)}>
                       <option value="Todos" defaultChecked>
@@ -60,9 +64,9 @@ export function TransactionTable({ type }) {
               {tableType.value.map((values, index) => (
                 <tr key={index}>
                   <td>{values.title}</td>
-                  <td className="deposit">{values.price}</td>
+                  <td className="deposit">{formatCurrency(values.price)}</td>
                   <td>{values.category}</td>
-                  <td>{values.date}</td>
+                  <td>{formatDate(values.date)}</td>
                 </tr>
               ))}
             </>

@@ -3,51 +3,51 @@ const months = {
   value: [
     {
       title: "Dezembro",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Novembro",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Outubro",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Setembro",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Agosto",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Julho",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Junho",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Maio",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Abril",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Março",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Fevereiro",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
     {
       title: "Janeiro",
-      price: "R$: 12.000,00",
+      price: 12000,
     },
   ],
 };
@@ -57,15 +57,15 @@ const payments = {
   value: [
     {
       title: "Desenvolvimento",
-      price: "R$: 12.000,00",
+      price: 12000,
       category: "Venda",
-      date: "13/04/2021",
+      date: "2021-04-14",
     },
     {
       title: "Carro",
-      price: "R$: 12.000,00",
+      price: 12000,
       category: "Venda",
-      date: "13/04/2021",
+      date: "2021-04-14",
     },
   ],
 };
