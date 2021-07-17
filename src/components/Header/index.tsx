@@ -19,7 +19,7 @@ export function Header() {
           onClick={() => setIsOpen(true)}
         />
 
-        <Link href="/">
+        <Link href="/home">
           <div className="icone">
             <img src="/images/money.svg" alt="Finance" />
             <p>My Finance</p>
@@ -33,7 +33,7 @@ export function Header() {
             onClick={() => setIsOpen(false)}
           />
 
-          <S.LinksMobile href="/" pathActive={asPath}>
+          <S.LinksMobile href="/home" pathActive={asPath}>
             Meses
           </S.LinksMobile>
           <S.LinksMobile href="/nova-transacao" pathActive={asPath}>
@@ -48,7 +48,7 @@ export function Header() {
         </S.MenuMobile>
 
         <nav>
-          <S.Links href="/" pathActive={asPath}>
+          <S.Links href="/home" pathActive={asPath}>
             Meses
           </S.Links>
           <S.Links href="/nova-transacao" pathActive={asPath}>

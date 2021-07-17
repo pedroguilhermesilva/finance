@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
+
+import { Container } from "../../components/Container";
 import { TransactionTable } from "../../components/TransactionTable";
+import CardTotal from "../../components/CardTotal";
 
 import Wrapper from "./styles";
-import CardTotal from "../../components/CardTotal";
 
 export default function Transations() {
   const { query, asPath } = useRouter();
@@ -12,14 +14,16 @@ export default function Transations() {
   return (
     <>
       <Head>
-        <title>Nova Transação | Finance</title>
+        <title>Transações | Finance</title>
       </Head>
 
-      <Wrapper pathActive={asPath}>
-        <CardTotal month={transacoes} />
-        {/* <h1>Mês {transacoes}</h1> */}
-        <TransactionTable type="payments" />
-      </Wrapper>
+      <Container>
+        <Wrapper pathActive={asPath}>
+          <CardTotal month={transacoes} />
+          {/* <h1>Mês {transacoes}</h1> */}
+          <TransactionTable type="payments" />
+        </Wrapper>
+      </Container>
     </>
   );
 }

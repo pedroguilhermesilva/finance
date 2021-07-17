@@ -1,8 +1,10 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
 import Wrapper from "./styles";
+
+import { Container } from "../../components/Container";
 
 interface FormProps {
   name: string;
@@ -49,76 +51,78 @@ export default function Perfil() {
         <title>Meu Perfil | Finance</title>
       </Head>
 
-      <Wrapper>
-        <h1>Meu Perfil</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            placeholder="Nome"
-            type="text"
-            {...register("name", { required: true })}
-            className={errors.name ? "errorForm" : ""}
-          />
-          {errors.name && <span>Por favor, preencha o campo título</span>}
-          <input
-            placeholder="Preço"
-            type="number"
-            {...register("salary", { required: true })}
-            className={errors.salary ? "errorForm" : ""}
-          />
-          {errors.salary && <span>Por favor, preencha o campo preço</span>}
-          <select
-            {...register("salaryType", { required: true })}
-            className={errors.salaryType ? "errorForm" : ""}
-          >
-            <option value="" defaultChecked>
-              Selecione um tipo de recebimento de salário
-            </option>
-            <option value="quinzenal">Quinzenal</option>
-            <option value="mensal">Mensal</option>
-          </select>
-          {errors.salaryType && (
-            <span>Por favor, selecione um tipo de recebimento</span>
-          )}
+      <Container>
+        <Wrapper>
+          <h1>Meu Perfil</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+              placeholder="Nome"
+              type="text"
+              {...register("name", { required: true })}
+              className={errors.name ? "errorForm" : ""}
+            />
+            {errors.name && <span>Por favor, preencha o campo título</span>}
+            <input
+              placeholder="Preço"
+              type="number"
+              {...register("salary", { required: true })}
+              className={errors.salary ? "errorForm" : ""}
+            />
+            {errors.salary && <span>Por favor, preencha o campo preço</span>}
+            <select
+              {...register("salaryType", { required: true })}
+              className={errors.salaryType ? "errorForm" : ""}
+            >
+              <option value="" defaultChecked>
+                Selecione um tipo de recebimento de salário
+              </option>
+              <option value="quinzenal">Quinzenal</option>
+              <option value="mensal">Mensal</option>
+            </select>
+            {errors.salaryType && (
+              <span>Por favor, selecione um tipo de recebimento</span>
+            )}
 
-          {wacthField[0] !== undefined &&
-          wacthField[0] !== "" &&
-          wacthField[0] !== "quinzenal" ? (
-            <>
-              <label htmlFor="dateForm">Data do salário</label>
-              <input
-                placeholder="00/00/0000"
-                type="date"
-                onChange={(e) => setDate(e.target.value)}
-                required
-              />
-            </>
-          ) : (
-            <>
-              {wacthField[0] !== undefined &&
-                wacthField[0] !== "" &&
-                wacthField[0] !== "mensal" && (
-                  <>
-                    <label htmlFor="dateForm">Data da salário 1</label>
-                    <input
-                      placeholder="00/00/0000"
-                      type="date"
-                      onChange={(e) => setDate(e.target.value)}
-                      required
-                    />
-                    <label htmlFor="dateForm">Data da salário 2</label>
-                    <input
-                      placeholder="00/00/0000"
-                      type="date"
-                      onChange={(e) => setDate2(e.target.value)}
-                      required
-                    />
-                  </>
-                )}
-            </>
-          )}
-          <button type="submit">Cadastrar</button>
-        </form>
-      </Wrapper>
+            {wacthField[0] !== undefined &&
+            wacthField[0] !== "" &&
+            wacthField[0] !== "quinzenal" ? (
+              <>
+                <label htmlFor="dateForm">Data do salário</label>
+                <input
+                  placeholder="00/00/0000"
+                  type="date"
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </>
+            ) : (
+              <>
+                {wacthField[0] !== undefined &&
+                  wacthField[0] !== "" &&
+                  wacthField[0] !== "mensal" && (
+                    <>
+                      <label htmlFor="dateForm">Data da salário 1</label>
+                      <input
+                        placeholder="00/00/0000"
+                        type="date"
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                      />
+                      <label htmlFor="dateForm">Data da salário 2</label>
+                      <input
+                        placeholder="00/00/0000"
+                        type="date"
+                        onChange={(e) => setDate2(e.target.value)}
+                        required
+                      />
+                    </>
+                  )}
+              </>
+            )}
+            <button type="submit">Cadastrar</button>
+          </form>
+        </Wrapper>
+      </Container>
     </>
   );
 }

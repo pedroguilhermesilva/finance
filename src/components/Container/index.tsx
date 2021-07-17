@@ -1,5 +1,11 @@
+import { Header } from "../Header";
 import * as S from "./styles";
 
 export function Container({ children }) {
-  return <S.Container>{children}</S.Container>;
+  return (
+    <>
+      <Header />
+      <S.Container>{children}</S.Container>
+    </>
+  );
 }

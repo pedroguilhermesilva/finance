@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
 
+import { Container } from "../../components/Container";
+
 import Wrapper from "./styles";
 
 interface FormProps {
@@ -39,28 +41,29 @@ export default function NewCategory() {
       <Head>
         <title>Nova Categoria | Finance</title>
       </Head>
-
-      <Wrapper>
-        <h1>Nova categoria</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            placeholder="Título"
-            type="text"
-            {...register("title", { required: true })}
-            className={errors.title ? "errorForm" : ""}
-          />
-          {errors.title && <span>Por favor, preencha o campo título</span>}
-          <label htmlFor="dateForm">Data de vencimento</label>
-          <input
-            placeholder="00/00/0000"
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
-            required
-            id="dateForm"
-          />
-          <button type="submit">Cadastrar</button>
-        </form>
-      </Wrapper>
+      <Container>
+        <Wrapper>
+          <h1>Nova categoria</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+              placeholder="Título"
+              type="text"
+              {...register("title", { required: true })}
+              className={errors.title ? "errorForm" : ""}
+            />
+            {errors.title && <span>Por favor, preencha o campo título</span>}
+            <label htmlFor="dateForm">Data de vencimento</label>
+            <input
+              placeholder="00/00/0000"
+              type="date"
+              onChange={(e) => setDate(e.target.value)}
+              required
+              id="dateForm"
+            />
+            <button type="submit">Cadastrar</button>
+          </form>
+        </Wrapper>
+      </Container>
     </>
   );
 }
