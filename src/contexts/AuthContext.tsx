@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import { ReactNode, useState, createContext } from "react";
+import { ReactNode, useState, createContext, useContext } from "react";
 import { auth, firebase } from "../services/firebase";
+import { setCookie, parseCookies } from "nookies";
 
 type User = {
   id: string;
@@ -29,20 +29,30 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
     const result = await auth.signInWithPopup(provider);
 
-    if (result.user) {
+    if (!user && result.user) {
       const { displayName, photoURL, uid } = result.user;
+
+      const userInfo: User = {
+        avatar: photoURL,
+        id: uid,
+        name: displayName,
+      };
 
       if (!displayName || !photoURL) {
         throw new Error("Missing information from Google Account.");
       }
 
-      setUser({
-        id: uid,
-        name: displayName,
-        avatar: photoURL,
+      setCookie(null, "userInfo", JSON.stringify(userInfo), {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
       });
+      setUser(userInfo);
 
       router.push("/home");
+    } else {
+      const { userInfo } = parseCookies(null);
+      const user = JSON.parse(userInfo);
+      console.log(user);
     }
   }
 

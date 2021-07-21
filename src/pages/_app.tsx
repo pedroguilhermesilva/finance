@@ -8,19 +8,12 @@ import { Container } from "../components/Container";
 import { AuthContextProvider, useAuth } from "../contexts/AuthContext";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { user } = useAuth();
   return (
     <>
       <ThemeProvider theme={ThemeDefault}>
         <AuthContextProvider>
           <GlobalStyle />
-          {user ? (
-            <Container>
-              <Component {...pageProps} />
-            </Container>
-          ) : (
-            <Component {...pageProps} />
-          )}
+          <Component {...pageProps} />
         </AuthContextProvider>
       </ThemeProvider>
     </>

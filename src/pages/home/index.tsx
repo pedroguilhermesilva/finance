@@ -1,11 +1,23 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { parseCookies } from "nookies";
 
 import { Container } from "../../components/Container";
 import { TransactionTable } from "../../components/TransactionTable";
 
 import Wrapper from "./styles";
 
-export default function SignIn() {
+type UserInfo = {
+  id: string;
+  name: string;
+  avatar: string;
+};
+
+type User = {
+  user: UserInfo;
+};
+
+export default function Home({ user }: User) {
   return (
     <>
       <Head>
@@ -15,9 +27,21 @@ export default function SignIn() {
       <Container>
         <Wrapper>
           <h1>Meses</h1>
+          <h1>{user.name}</h1>
           <TransactionTable type="months" />
         </Wrapper>
       </Container>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { userInfo } = parseCookies(context);
+  const user = JSON.parse(userInfo);
+
+  return {
+    props: {
+      user,
+    },
+  };
+};

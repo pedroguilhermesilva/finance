@@ -27,7 +27,7 @@ export function TransactionTable({ type }) {
   }
 
   function changeValuesByMonth(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
 
   return (
