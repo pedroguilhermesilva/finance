@@ -62,13 +62,6 @@ export default function Perfil() {
               className={errors.name ? "errorForm" : ""}
             />
             {errors.name && <span>Por favor, preencha o campo título</span>}
-            <input
-              placeholder="Preço"
-              type="number"
-              {...register("salary", { required: true })}
-              className={errors.salary ? "errorForm" : ""}
-            />
-            {errors.salary && <span>Por favor, preencha o campo preço</span>}
             <select
               {...register("salaryType", { required: true })}
               className={errors.salaryType ? "errorForm" : ""}
@@ -94,6 +87,15 @@ export default function Perfil() {
                   onChange={(e) => setDate(e.target.value)}
                   required
                 />
+                <input
+                  placeholder="Preço"
+                  type="number"
+                  {...register("salary", { required: true })}
+                  className={errors.salary ? "errorForm" : ""}
+                />
+                {errors.salary && (
+                  <span>Por favor, preencha o campo preço</span>
+                )}
               </>
             ) : (
               <>
@@ -108,6 +110,15 @@ export default function Perfil() {
                         onChange={(e) => setDate(e.target.value)}
                         required
                       />
+                      <input
+                        placeholder="Preço"
+                        type="number"
+                        {...register("salary", { required: true })}
+                        className={errors.salary ? "errorForm" : ""}
+                      />
+                      {errors.salary && (
+                        <span>Por favor, preencha o campo preço</span>
+                      )}
                       <label htmlFor="dateForm">Data da salário 2</label>
                       <input
                         placeholder="00/00/0000"
@@ -115,6 +126,15 @@ export default function Perfil() {
                         onChange={(e) => setDate2(e.target.value)}
                         required
                       />
+                      <input
+                        placeholder="Preço"
+                        type="number"
+                        {...register("salary", { required: true })}
+                        className={errors.salary ? "errorForm" : ""}
+                      />
+                      {errors.salary && (
+                        <span>Por favor, preencha o campo preço</span>
+                      )}
                     </>
                   )}
               </>

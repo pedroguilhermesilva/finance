@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import * as S from "./styles";
+
+import { MdRemoveCircleOutline } from "react-icons/md";
 
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 
 import { months, payments } from "./typeTable";
+
+import * as S from "./styles";
 
 export function TransactionTable({ type }) {
   const [selectedOption, setSelectedOption] = useState("Todos");
@@ -30,6 +33,10 @@ export function TransactionTable({ type }) {
     // console.log(e.target.value);
   }
 
+  function removeValue(value) {
+    console.log(value);
+  }
+
   return (
     <S.Wrapper mouseNotPointer={type === "months"}>
       <table>
@@ -46,7 +53,9 @@ export function TransactionTable({ type }) {
               {tableType?.value?.map((values, index) => (
                 <tr key={index}>
                   <td onClick={goToPage}>{values.title}</td>
-                  <td className="deposit">{formatCurrency(values.price)}</td>
+                  <td onClick={goToPage} className="deposit">
+                    {formatCurrency(values.price)}
+                  </td>
                   <td>
                     <select onChange={(value) => changeValuesByMonth(value)}>
                       <option value="Todos" defaultChecked>
@@ -67,6 +76,15 @@ export function TransactionTable({ type }) {
                   <td className="deposit">{formatCurrency(values.price)}</td>
                   <td>{values.category}</td>
                   <td>{formatDate(values.date)}</td>
+                  <td>
+                    <MdRemoveCircleOutline
+                      className="remove-transaction-icon"
+                      size={25}
+                      color="#c70a0a"
+                      onClick={() => removeValue(values)}
+                      cursor="pointer"
+                    />
+                  </td>
                 </tr>
               ))}
             </>

@@ -14,7 +14,7 @@ export const Header = styled.header<MenuActiveProps>`
 `;
 
 export const Wrapper = styled.div`
-  max-width: 1120px;
+  max-width: 1140px;
   margin: 0 auto;
   padding: 40px 20px;
 

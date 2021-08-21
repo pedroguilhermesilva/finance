@@ -53,7 +53,7 @@ const months = {
 };
 
 const payments = {
-  title: ["Título", "Preço", "Categoria", "Data"],
+  title: ["Título", "Preço", "Categoria", "Data", ""],
   value: [
     {
       title: "Desenvolvimento",

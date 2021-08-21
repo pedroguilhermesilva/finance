@@ -17,8 +17,12 @@ export const Wrapper = styled.div<mouseProps>`
       color: ${({ theme }) => theme.colors.gray};
       font-weight: 400;
       padding: 1rem 2rem;
-      text-align: left;
+      text-align: center;
       line-height: 1.5rem;
+
+      &:first-child {
+        text-align: left;
+      }
     }
 
     td {
@@ -27,11 +31,18 @@ export const Wrapper = styled.div<mouseProps>`
       background: ${({ theme }) => theme.colors.primary};
       color: ${({ theme }) => theme.colors.gray};
       border-radius: 0.25rem;
-      cursor: ${({ mouseNotPointer }) =>
-        mouseNotPointer ? "pointer" : "auto"};
+      text-align: center;
 
       &:first-child {
         color: ${({ theme }) => theme.colors.darkGrey};
+        cursor: ${({ mouseNotPointer }) =>
+          mouseNotPointer ? "pointer" : "auto"};
+        text-align: left;
+      }
+
+      &:nth-child(2) {
+        cursor: ${({ mouseNotPointer }) =>
+          mouseNotPointer ? "pointer" : "auto"};
       }
 
       &.deposit {
@@ -57,5 +68,9 @@ export const Wrapper = styled.div<mouseProps>`
         }
       }
     }
+  }
+
+  .remove-transaction-icon {
+    margin-bottom: -5px;
   }
 `;
