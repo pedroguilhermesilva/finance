@@ -17,6 +17,20 @@ type User = {
   user: UserInfo;
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { userInfo } = parseCookies(context);
+  const user = userInfo ? JSON.parse(userInfo) : null;
+
+  return {
+    redirect: !user && {
+      destination: "/",
+    },
+    props: {
+      user,
+    },
+  };
+};
+
 export default function Home({ user }: User) {
   return (
     <>
@@ -34,14 +48,3 @@ export default function Home({ user }: User) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userInfo } = parseCookies(context);
-  const user = JSON.parse(userInfo);
-
-  return {
-    props: {
-      user,
-    },
-  };
-};
