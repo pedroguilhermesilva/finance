@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import { ReactNode, useState, createContext, useContext } from "react";
 import { auth, firebase } from "../services/firebase";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
+// import { useEffect } from "react";
+// import { getCookieParser } from "next/dist/server/api-utils";
 
 type User = {
   id: string;
@@ -12,6 +14,7 @@ type User = {
 type AutContextType = {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
+  removeUser: () => void;
 };
 
 type AuthContextProviderProps = {
@@ -23,6 +26,12 @@ export const AuthContext = createContext({} as AutContextType);
 export function AuthContextProvider(props: AuthContextProviderProps) {
   const router = useRouter();
   const [user, setUser] = useState<User>();
+
+  // useEffect((): void => {
+  //   console.log("user", user);
+  //   getCookieParser()
+  //    user || getCookieParser() ? router.push("/home") : router.push("/");
+  // }, []);
 
   async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -56,8 +65,14 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
     }
   }
 
+  function removeUser() {
+    destroyCookie(null, "userInfo");
+    setUser(undefined);
+    router.push("/");
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, removeUser }}>
       {props.children}
     </AuthContext.Provider>
   );

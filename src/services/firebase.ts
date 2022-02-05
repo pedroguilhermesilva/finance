@@ -12,11 +12,7 @@ var firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  firebase.app();
-}
+!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
 
 const analytics = firebase.analytics;
 const auth = firebase.auth();

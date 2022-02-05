@@ -2,7 +2,6 @@ import Head from "next/head";
 import { FcGoogle } from "react-icons/fc";
 
 import { useAuth } from "../../contexts/AuthContext";
-// import { TransactionTable } from "../components/TransactionTable";
 
 import { Wrapper, Image, Section } from "./styles";
 

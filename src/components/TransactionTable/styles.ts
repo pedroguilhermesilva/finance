@@ -32,6 +32,7 @@ export const Wrapper = styled.div<mouseProps>`
       color: ${({ theme }) => theme.colors.gray};
       border-radius: 0.25rem;
       text-align: center;
+      white-space: nowrap;
 
       &:first-child {
         color: ${({ theme }) => theme.colors.darkGrey};
