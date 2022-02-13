@@ -1,29 +1,83 @@
 import Head from "next/head";
-import { useState } from "react";
+import { parseCookies } from "nookies";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
 import { api } from "../../services/api";
-import Wrapper from "./styles";
 
 import { Container } from "../../components/Container";
+import Wrapper from "./styles";
+import { GetServerSideProps } from "next/types";
+import { getDataSearchByOne } from "../../services/profile";
+import formatDate from "../../utils/formatDate";
+import fomartDateToSetDefaultInputDate from "../../utils/fomartDateToSetDefaultInputDate";
 
 interface FormProps {
   name: string;
-  salary: string;
   salaryType: "mensal" | "quinzenal" | "";
-  // date: Date;
+  dateSalaryFirst: string;
+  dateSalaryFirstPrice: string;
+  dateSalarySecond: string;
+  dateSalarySecondPrice: string;
 }
 
-export default function Perfil() {
+export type ProfileData = {
+  date_salary_first: string;
+  date_salary_first_price: string;
+  date_salary_second: string;
+  date_salary_second_price: string;
+  id: string;
+  name: string;
+  salary_type: "mensal" | "quinzenal" | "";
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies: any = parseCookies(ctx);
+
+  const response = await getDataSearchByOne(
+    cookies["userInfo"],
+    "users",
+    "name",
+    "Pedro",
+    "=="
+  );
+
+  return {
+    props: {
+      profile: response,
+    },
+  };
+};
+
+export default function Perfil({ profile }: { profile: ProfileData }) {
   const [date, setDate] = useState("");
   const [date2, setDate2] = useState("");
+  const [profileData] = useState<ProfileData>(profile[0]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
+    getValues,
     reset,
-  } = useForm<FormProps>();
+  } = useForm<FormProps>({
+    defaultValues: {
+      name: profileData.name,
+      salaryType: profileData.salary_type,
+      dateSalaryFirst: fomartDateToSetDefaultInputDate(
+        profileData.date_salary_first
+      ),
+      dateSalaryFirstPrice: profileData.date_salary_first_price
+        ? profileData.date_salary_first_price
+        : "",
+      dateSalarySecond: fomartDateToSetDefaultInputDate(
+        profileData.date_salary_second
+      ),
+      dateSalarySecondPrice: profileData.date_salary_second_price,
+    },
+  });
 
   const wacthField = watch(["salaryType"]);
 
@@ -44,6 +98,23 @@ export default function Perfil() {
       alert(err.message);
     }
   };
+
+  // useEffect(() => {
+  //   if (profileData) {
+  //     setValue("name", profileData.name);
+  //     setValue("salaryType", profileData.salary_type);
+  //     setValue(
+  //       "dateSalaryFirst",
+  //       new Date(profileData.date_salary_first).toISOString().substring(0, 10)
+  //     );
+  //     setValue("dateSalaryFirstPrice", profileData.date_salary_first_price);
+  //   }
+  // }, [profileData]);
+
+  useEffect(() => {
+    const test = getValues();
+    console.log("test", test);
+  }, [getValues]);
 
   return (
     <>
@@ -82,18 +153,23 @@ export default function Perfil() {
               <>
                 <label htmlFor="dateForm">Data do salário</label>
                 <input
+                  defaultValue={profile.date_salary_first}
                   placeholder="00/00/0000"
                   type="date"
+                  {...register("dateSalaryFirst", { required: true })}
+                  className={errors.dateSalaryFirst ? "errorForm" : ""}
                   onChange={(e) => setDate(e.target.value)}
-                  required
                 />
+                {errors.dateSalaryFirst && (
+                  <span>Por favor, preencha o campo data salário</span>
+                )}
                 <input
                   placeholder="Preço"
                   type="number"
-                  {...register("salary", { required: true })}
-                  className={errors.salary ? "errorForm" : ""}
+                  {...register("dateSalaryFirstPrice", { required: true })}
+                  className={errors.dateSalaryFirstPrice ? "errorForm" : ""}
                 />
-                {errors.salary && (
+                {errors.dateSalaryFirstPrice && (
                   <span>Por favor, preencha o campo preço</span>
                 )}
               </>
@@ -107,16 +183,29 @@ export default function Perfil() {
                       <input
                         placeholder="00/00/0000"
                         type="date"
+                        {...register("dateSalaryFirst", {
+                          required: true,
+                        })}
+                        className={errors.dateSalaryFirst ? "errorForm" : ""}
+                        {...register("dateSalaryFirst", {
+                          required: true,
+                        })}
                         onChange={(e) => setDate(e.target.value)}
-                        required
                       />
+                      {errors.dateSalaryFirst && (
+                        <span>Por favor, preencha o campo data salário</span>
+                      )}
                       <input
                         placeholder="Preço"
                         type="number"
-                        {...register("salary", { required: true })}
-                        className={errors.salary ? "errorForm" : ""}
+                        {...register("dateSalaryFirstPrice", {
+                          required: true,
+                        })}
+                        className={
+                          errors.dateSalaryFirstPrice ? "errorForm" : ""
+                        }
                       />
-                      {errors.salary && (
+                      {errors.dateSalaryFirstPrice && (
                         <span>Por favor, preencha o campo preço</span>
                       )}
                       <label htmlFor="dateForm">Data da salário 2</label>
@@ -124,15 +213,25 @@ export default function Perfil() {
                         placeholder="00/00/0000"
                         type="date"
                         onChange={(e) => setDate2(e.target.value)}
-                        required
+                        className={errors.dateSalarySecond ? "errorForm" : ""}
+                        {...register("dateSalarySecond", {
+                          required: true,
+                        })}
                       />
+                      {errors.dateSalarySecond && (
+                        <span>Por favor, preencha o campo data salário</span>
+                      )}
                       <input
                         placeholder="Preço"
                         type="number"
-                        {...register("salary", { required: true })}
-                        className={errors.salary ? "errorForm" : ""}
+                        {...register("dateSalarySecondPrice", {
+                          required: true,
+                        })}
+                        className={
+                          errors.dateSalarySecondPrice ? "errorForm" : ""
+                        }
                       />
-                      {errors.salary && (
+                      {errors.dateSalarySecondPrice && (
                         <span>Por favor, preencha o campo preço</span>
                       )}
                     </>
