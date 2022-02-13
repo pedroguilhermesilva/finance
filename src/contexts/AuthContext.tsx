@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import { ReactNode, useState, createContext, useContext } from "react";
 import { auth, firebase } from "../services/firebase";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
-// import { useEffect } from "react";
-// import { getCookieParser } from "next/dist/server/api-utils";
 
 type User = {
   id: string;
@@ -26,12 +24,6 @@ export const AuthContext = createContext({} as AutContextType);
 export function AuthContextProvider(props: AuthContextProviderProps) {
   const router = useRouter();
   const [user, setUser] = useState<User>();
-
-  // useEffect((): void => {
-  //   console.log("user", user);
-  //   getCookieParser()
-  //    user || getCookieParser() ? router.push("/home") : router.push("/");
-  // }, []);
 
   async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -59,7 +51,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
       router.push("/home");
     } else {
-      const { userInfo } = parseCookies(null);
+      const { userInfo } = parseCookies();
       const user = JSON.parse(userInfo);
       console.log(user);
     }
@@ -79,7 +71,5 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-
-  return context;
+  return useContext(AuthContext);
 }

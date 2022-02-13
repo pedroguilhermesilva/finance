@@ -1,4 +1,4 @@
-import nookies from "nookies";
+import { parseCookies } from "nookies";
 import { db } from "../firebase";
 
 export type WhereFilterOp =
