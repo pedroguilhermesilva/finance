@@ -1,21 +1,21 @@
 import Head from "next/head";
 import { FcGoogle } from "react-icons/fc";
-
-import { useAuth } from "../../contexts/AuthContext";
+import { AiFillGithub } from "react-icons/ai";
+import { signIn } from "next-auth/react";
+import { Loader } from "../../components/Loader";
 
 import { Wrapper, Image, Section } from "./styles";
+import { useState } from "react";
 
 export default function SignIn() {
-  const { signInWithGoogle } = useAuth();
-
-  async function handleSignUp() {
-    await signInWithGoogle();
-  }
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <Head>
         <title>Finance</title>
       </Head>
+
+      <Loader isLoading={loading} />
 
       <Wrapper>
         <Image
@@ -28,9 +28,27 @@ export default function SignIn() {
             <p>My Finance</p>
           </div>
 
-          <button onClick={handleSignUp}>
+          <button
+            onClick={() => {
+              signIn("google", {
+                callbackUrl: "/home",
+              });
+              setLoading(true);
+            }}
+          >
             <FcGoogle className="icon-google" size={35} />
-            Entrar com conta google
+            Entrar com Google
+          </button>
+          <button
+            onClick={() => {
+              signIn("github", {
+                callbackUrl: "/home",
+              });
+              setLoading(true);
+            }}
+          >
+            <AiFillGithub className="icon-google" size={35} />
+            Entrar com GitHub
           </button>
         </Section>
       </Wrapper>
