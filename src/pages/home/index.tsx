@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { parseCookies } from "nookies";
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
-import { ArrowLeft, ArrowRight } from "phosphor-react";
-import { addYears, subYears } from "date-fns";
-import { useSession } from "next-auth/react";
+
+import { getSession, useSession } from "next-auth/react";
 
 import { Container } from "../../components/Container";
 import { TransactionTable } from "../../components/TransactionTable";
-import theme from "../../styles/themes/normal";
-import { api } from "../../services/api";
 
-import { Wrapper, ContainerYear } from "./styles";
-import { redirect } from "next/dist/server/api-utils";
+import { Wrapper } from "./styles";
 import { useRouter } from "next/router";
+import YearSelect from "../../components/YearSelect";
 
 type UserInfo = {
   id: string;
@@ -27,10 +22,12 @@ type User = {
   user: UserInfo;
 };
 
-export default function Home({ user }: User) {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+export default function Home() {
+  const { status } = useSession();
+  const [data, setData] = useState([]);
   const [today, setToday] = useState<Date>(new Date());
+
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -38,38 +35,26 @@ export default function Home({ user }: User) {
     }
   }, [status]);
 
+  const handleChangeYears = async (date: Date) => {
+    const session = await getSession();
+    console.log("session", session);
+    setToday(date);
+  };
+
   return (
     <>
       <Head>
         <title>Finance</title>
       </Head>
-
       <Container>
-        <Wrapper>
-          <ContainerYear>
-            <ArrowLeft
-              className="left"
-              size={24}
-              onClick={() => setToday((date) => subYears(date, 1))}
-              color={theme.colors.orange}
-            />
-            <label htmlFor="datePicker">Ano atual: </label>
-            <DatePicker
-              id="datePicker"
-              selected={today}
-              onChange={(date: Date) => setToday(date)}
-              showYearPicker
-              dateFormat="yyyy"
-            />
-            <ArrowRight
-              className="right"
-              size={24}
-              onClick={() => setToday((date) => addYears(date, 1))}
-              color={theme.colors.orange}
-            />
-          </ContainerYear>
-          <TransactionTable type="months" />
-        </Wrapper>
+        {data.length > 0 ? (
+          <Wrapper>
+            <YearSelect onChangeYear={handleChangeYears} date={today} />
+            <TransactionTable type="months" />
+          </Wrapper>
+        ) : (
+          <p>Ainda não há dado nenhum a ser exibido.</p>
+        )}
       </Container>
     </>
   );

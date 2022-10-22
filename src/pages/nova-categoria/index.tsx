@@ -10,7 +10,7 @@ import Wrapper from "./styles";
 interface FormProps {
   title: string;
   price: string;
-  // date: Date;
+  date: Date;
   category: string;
 }
 
@@ -25,10 +25,12 @@ export default function NewCategory() {
   } = useForm<FormProps>();
 
   const onSubmit = async (data: FormProps) => {
-    const values = { ...data, date };
+    const dateCorrectFormat = new Date(date);
+
+    const values: FormProps = { ...data, date: dateCorrectFormat };
     try {
-      const response = await api.post("/new-category", values);
-      alert(`${response.data}`);
+      const response = await api.post("/categories", values);
+      alert(response.data);
       setDate("");
       reset();
     } catch (err) {
