@@ -6,6 +6,7 @@ import Wrapper from "./styles";
 
 import { Container } from "../../components/Container";
 import { getSession } from "next-auth/react";
+import { NUMBER_INSTALLMENTS } from "../../utils/constants";
 
 interface FormProps {
   title: string;
@@ -115,9 +116,11 @@ export default function NewTransaction({
                   <option value="" defaultChecked>
                     Selecione a quantidade de parcelas
                   </option>
-                  <option value="2">2x</option>
-                  <option value="3">3x</option>
-                  <option value="4">4x</option>
+                  {NUMBER_INSTALLMENTS.map((value, index) => (
+                    <option key={index} value={index + 1}>
+                      {value}x
+                    </option>
+                  ))}
                 </select>
                 {errors.quantity && (
                   <span>Por favor, selecione uma categoria</span>
