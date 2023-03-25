@@ -21,7 +21,7 @@ export default function Transations() {
         <Wrapper pathActive={asPath}>
           <CardTotal month={transacoes} />
           {/* <h1>Mês {transacoes}</h1> */}
-          <TransactionTable type="payments" />
+          <TransactionTable data={[]} type="payments" />
         </Wrapper>
       </Container>
     </>

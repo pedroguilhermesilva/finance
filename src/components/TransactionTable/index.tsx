@@ -52,7 +52,7 @@ export function TransactionTable({ type, data }: TransactionTableProps) {
       <table>
         <thead>
           <tr>
-            {months.title?.map((menu, index) => (
+            {tableType.title?.map((menu, index) => (
               <>
                 <th key={index}>{menu}</th>
               </>
