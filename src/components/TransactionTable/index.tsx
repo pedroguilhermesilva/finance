@@ -1,24 +1,34 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
-
 import { MdRemoveCircleOutline } from "react-icons/md";
 
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 
 import { months, payments } from "./typeTable";
+import { format } from "date-fns";
 
 import * as S from "./styles";
 
-export function TransactionTable({ type }) {
-  const [selectedOption, setSelectedOption] = useState("Todos");
+interface DataProps {
+  month: string;
+  amount: number;
+  salaryType: "quinzenal" | "mensal";
+  salaryOneDate: string;
+  salaryTwoDate: string;
+}
 
+interface TransactionTableProps {
+  type: "months" | "payments";
+  data: DataProps[];
+}
+
+export function TransactionTable({ type, data }: TransactionTableProps) {
   const router = useRouter();
   let tableType;
 
   switch (type) {
     case "months":
-      tableType = months;
+      tableType = data;
       break;
     case "payments":
       tableType = payments;
@@ -42,27 +52,50 @@ export function TransactionTable({ type }) {
       <table>
         <thead>
           <tr>
-            {tableType?.title.map((menu, index) => (
-              <th key={index}>{menu}</th>
+            {tableType.title?.map((menu, index) => (
+              <>
+                <th key={index}>{menu}</th>
+              </>
             ))}
           </tr>
         </thead>
         <tbody>
           {type === "months" ? (
             <>
-              {tableType?.value?.map((values, index) => (
+              {tableType?.map((values, index) => (
                 <tr key={index}>
-                  <td onClick={goToPage}>{values.title}</td>
+                  <td onClick={goToPage}>{values.month}</td>
                   <td onClick={goToPage} className="deposit">
-                    {formatCurrency(values.price)}
+                    {formatCurrency(values.amount)}
                   </td>
                   <td>
-                    <select onChange={(value) => changeValuesByMonth(value)}>
-                      <option value="Todos" defaultChecked>
-                        Todos
-                      </option>
-                      <option value="05/05/2021">05/05/2021</option>
-                      <option value="25/05/2021">25/05/2021</option>
+                    <select
+                      onChange={(value) => changeValuesByMonth(value)}
+                      disabled={values.salaryType === "mensal"}
+                    >
+                      {values.salaryType !== "mensal" ? (
+                        <>
+                          <option value="Todos" defaultChecked>
+                            Todos
+                          </option>
+                          <option value={values.salaryOneDate}>
+                            {format(
+                              new Date(values.salaryOneDate),
+                              "dd/MM/yyyy"
+                            )}
+                          </option>
+                          <option value={values.salaryTwoDate}>
+                            {format(
+                              new Date(values.salaryTwoDate),
+                              "dd/MM/yyyy"
+                            )}
+                          </option>
+                        </>
+                      ) : (
+                        <option value={values.salaryOneDate} defaultChecked>
+                          {format(new Date(values.salaryOneDate), "dd/MM/yyyy")}
+                        </option>
+                      )}
                     </select>
                   </td>
                 </tr>

@@ -1,11 +1,10 @@
 import React from "react";
+import { signOut } from "next-auth/react";
 import { FaTimes } from "react-icons/fa";
-import { useAuth } from "../../../../contexts/AuthContext";
 
 import * as S from "./styles";
 
 export function Mobile({ isOpen, asPath, setIsOpen }) {
-  const { removeUser } = useAuth();
   return (
     <S.MenuMobile isOpen={isOpen}>
       <FaTimes
@@ -15,7 +14,7 @@ export function Mobile({ isOpen, asPath, setIsOpen }) {
       />
 
       <S.LinksMobile href="/home" pathActive={asPath}>
-        Meses
+        Relatórios
       </S.LinksMobile>
       <S.LinksMobile href="/nova-transacao" pathActive={asPath}>
         Nova transação
@@ -26,7 +25,10 @@ export function Mobile({ isOpen, asPath, setIsOpen }) {
       <S.LinksMobile href="/perfil" pathActive={asPath}>
         Perfil
       </S.LinksMobile>
-      <S.LinksMobile onClick={removeUser} pathActive={asPath}>
+      <S.LinksMobile
+        onClick={() => signOut({ callbackUrl: "/" })}
+        pathActive={asPath}
+      >
         Sair
       </S.LinksMobile>
     </S.MenuMobile>

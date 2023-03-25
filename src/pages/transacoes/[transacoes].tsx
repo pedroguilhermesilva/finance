@@ -5,7 +5,7 @@ import { Container } from "../../components/Container";
 import { TransactionTable } from "../../components/TransactionTable";
 import CardTotal from "../../components/CardTotal";
 
-import Wrapper from "./styles";
+import Wrapper from "../../styles/pages/transacoes";
 
 export default function Transations() {
   const { query, asPath } = useRouter();
@@ -21,7 +21,7 @@ export default function Transations() {
         <Wrapper pathActive={asPath}>
           <CardTotal month={transacoes} />
           {/* <h1>Mês {transacoes}</h1> */}
-          <TransactionTable type="payments" />
+          <TransactionTable data={[]} type="payments" />
         </Wrapper>
       </Container>
     </>

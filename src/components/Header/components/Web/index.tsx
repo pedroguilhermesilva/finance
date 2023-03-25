@@ -1,15 +1,13 @@
 import React from "react";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { signOut } from "next-auth/react";
 
 import * as S from "./styles";
 
 export function Web({ asPath }) {
-  const { removeUser } = useAuth();
-
   return (
     <nav>
       <S.Links href="/home" pathActive={asPath}>
-        Meses
+        Relatórios
       </S.Links>
       <S.Links href="/nova-transacao" pathActive={asPath}>
         Nova transação
@@ -20,7 +18,10 @@ export function Web({ asPath }) {
       <S.Links href="/perfil" pathActive={asPath}>
         Perfil
       </S.Links>
-      <S.Links onClick={removeUser} pathActive={asPath}>
+      <S.Links
+        onClick={() => signOut({ callbackUrl: "/" })}
+        pathActive={asPath}
+      >
         Sair
       </S.Links>
     </nav>

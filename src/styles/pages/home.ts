@@ -6,11 +6,12 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  h1 {
+  label {
     font-weight: 500;
     font-size: ${({ theme }) => theme.fontSizes.large};
     color: ${({ theme }) => theme.colors.darkGrey};
+    margin-right: 0.5rem;
   }
 `;
 
-export default Wrapper;
+export { Wrapper };

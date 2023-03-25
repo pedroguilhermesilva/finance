@@ -1,19 +1,24 @@
 import { AppProps } from "next/app";
+import { Session } from "next-auth";
 import { ThemeProvider } from "styled-components";
+import { SessionProvider } from "next-auth/react";
 
 import GlobalStyle from "../styles/global";
 import ThemeDefault from "../styles/themes/normal";
 
-import { AuthContextProvider } from "../contexts/AuthContext";
-
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppProps<{
+  session: Session;
+}>) {
   return (
     <>
       <ThemeProvider theme={ThemeDefault}>
-        <AuthContextProvider>
+        <SessionProvider session={pageProps.session}>
           <GlobalStyle />
           <Component {...pageProps} />
-        </AuthContextProvider>
+        </SessionProvider>
       </ThemeProvider>
     </>
   );

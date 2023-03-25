@@ -1,19 +1,41 @@
 import Head from "next/head";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
-import Wrapper from "./styles";
+import Wrapper from "./../../styles/pages/novaTransacao";
 
 import { Container } from "../../components/Container";
+import { getSession } from "next-auth/react";
+import { NUMBER_INSTALLMENTS } from "../../utils/constants";
 
 interface FormProps {
   title: string;
   price: string;
-  // date: Date;
-  category: string;
+  date: Date;
+  categoryId: string;
+  installments: boolean;
+  quantity: number;
 }
 
-export default function NewTransaction() {
+interface RequestProps extends FormProps {
+  userId: string;
+}
+
+interface Categories {
+  id: string;
+  title: string;
+  date: Date;
+}
+
+interface ResponseSSRProps {
+  userId: string;
+  categories: Categories[];
+}
+
+export default function NewTransaction({
+  categories,
+  userId,
+}: ResponseSSRProps) {
   const [date, setDate] = useState("");
   const [errorDateInput, setErrorDateInput] = useState(false);
 
@@ -22,17 +44,24 @@ export default function NewTransaction() {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    getValues,
   } = useForm<FormProps>();
 
-  const onSubmit = async (data: FormProps) => {
-    if (date !== "") {
-      const values = { ...data, date };
+  const wacthField = watch(["installments"]);
 
+  const onSubmit = async (data: FormProps) => {
+    console.log("data", data);
+    const dateCorrectFormat = new Date(date);
+    if (date !== "") {
+      const values: RequestProps = { ...data, date: dateCorrectFormat, userId };
+      console.log("values", values);
       try {
-        const response = await api.post("/new-transaction", { ...values });
-        alert(`${response.data}`);
-        setDate("");
-        reset();
+        const response = await api.post("/transactions", { ...values });
+        alert(response.data);
+        console.log(response.data);
+        // setDate("");
+        // reset();
       } catch (err) {
         alert(err.message);
       }
@@ -65,8 +94,42 @@ export default function NewTransaction() {
               className={errors.price ? "errorForm" : ""}
             />
             {errors.price && <span>Por favor, preencha o campo preço</span>}
+            <div>
+              <input
+                id="installmentsForm"
+                type="checkbox"
+                name="installments"
+                {...register("installments")}
+                className={errors.price ? "errorForm" : ""}
+              />
+              <label htmlFor="installmentsForm">Compra Parcelada</label>
+            </div>
+            {wacthField[0] && (
+              <>
+                <select
+                  {...register("quantity", {
+                    required: getValues("installments") === true ? true : false,
+                  })}
+                  className={errors.quantity ? "errorForm" : ""}
+                  name="quantity"
+                >
+                  <option value="" defaultChecked>
+                    Selecione a quantidade de parcelas
+                  </option>
+                  {NUMBER_INSTALLMENTS.map((value, index) => (
+                    <option key={index} value={index + 1}>
+                      {value}x
+                    </option>
+                  ))}
+                </select>
+                {errors.quantity && (
+                  <span>Por favor, selecione uma categoria</span>
+                )}
+              </>
+            )}
             <label htmlFor="dateForm">Data da transação</label>
             <input
+              id="dateForm"
               placeholder="00/00/0000"
               type="date"
               onChange={(e) => {
@@ -78,21 +141,39 @@ export default function NewTransaction() {
             />
             {errorDateInput && <span>Por favor, preencha o campo data</span>}
             <select
-              {...register("category", { required: true })}
-              className={errors.category ? "errorForm" : ""}
+              {...register("categoryId", { required: true })}
+              className={errors.categoryId ? "errorForm" : ""}
+              name="categoryId"
             >
               <option value="" defaultChecked>
                 Selecione a categoria
               </option>
-              <option value="itau">Cartão Itau</option>
-              <option value="nubank">Cartão Nubank</option>
-              <option value="santander">Cartão Santander</option>
+              {categories.map((category) => (
+                <React.Fragment key={category.id}>
+                  <option value={category.id}>{category.title}</option>
+                </React.Fragment>
+              ))}
             </select>
-            {errors.category && <span>Por favor, selecione uma categoria</span>}
+            {errors.categoryId && (
+              <span>Por favor, selecione uma categoria</span>
+            )}
             <button type="submit">Cadastrar</button>
           </form>
         </Wrapper>
       </Container>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  const response = await api.get(`/categories?id=${session.user.id}`);
+
+  return {
+    props: {
+      userId: session.user.id,
+      categories: response.data,
+    },
+  };
 }
