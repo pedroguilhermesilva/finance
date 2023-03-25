@@ -5,7 +5,7 @@ import { api } from "../../services/api";
 
 import { Container } from "../../components/Container";
 
-import Wrapper from "./styles";
+import Wrapper from "./../../styles/pages/novaCategoria";
 
 interface FormProps {
   title: string;

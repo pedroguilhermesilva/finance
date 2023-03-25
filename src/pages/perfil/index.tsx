@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/api";
-import Wrapper from "./styles";
+import Wrapper from "./../../styles/pages/perfil";
 
 import { Container } from "../../components/Container";
 import { getCsrfToken, getSession, useSession } from "next-auth/react";

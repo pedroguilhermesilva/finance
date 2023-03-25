@@ -8,7 +8,7 @@ import { getSession, useSession } from "next-auth/react";
 import { Container } from "../../components/Container";
 import { TransactionTable } from "../../components/TransactionTable";
 
-import { Wrapper } from "./styles";
+import { Wrapper } from "./../../styles/pages/home";
 import { useRouter } from "next/router";
 import YearSelect from "../../components/YearSelect";
 import { api } from "../../services/api";

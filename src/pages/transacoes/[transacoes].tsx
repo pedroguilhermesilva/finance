@@ -5,7 +5,7 @@ import { Container } from "../../components/Container";
 import { TransactionTable } from "../../components/TransactionTable";
 import CardTotal from "../../components/CardTotal";
 
-import Wrapper from "./styles";
+import Wrapper from "../../styles/pages/transacoes";
 
 export default function Transations() {
   const { query, asPath } = useRouter();
