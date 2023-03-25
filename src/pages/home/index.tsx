@@ -102,7 +102,7 @@ export async function getServerSideProps(context) {
 
   const response = await api.get(`/reports?year=${date}`, {
     headers: {
-      "user-id": session.user.id,
+      "user-id": session.user?.id,
     },
   });
 
