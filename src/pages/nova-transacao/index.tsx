@@ -5,7 +5,7 @@ import { api } from "../../services/api";
 import Wrapper from "./../../styles/pages/novaTransacao";
 
 import { Container } from "../../components/Container";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { NUMBER_INSTALLMENTS } from "../../utils/constants";
 
 interface FormProps {
@@ -27,15 +27,23 @@ interface Categories {
   date: Date;
 }
 
+interface Profile {
+  salaryOneDate: Date;
+  salaryTwoDate: Date;
+}
+
 interface ResponseSSRProps {
   userId: string;
   categories: Categories[];
+  profile: Profile[];
 }
 
 export default function NewTransaction({
   categories,
   userId,
+  profile,
 }: ResponseSSRProps) {
+  const { data: session } = useSession();
   const [date, setDate] = useState("");
   const [errorDateInput, setErrorDateInput] = useState(false);
 
@@ -51,17 +59,12 @@ export default function NewTransaction({
   const wacthField = watch(["installments"]);
 
   const onSubmit = async (data: FormProps) => {
-    console.log("data", data);
     const dateCorrectFormat = new Date(date);
     if (date !== "") {
       const values: RequestProps = { ...data, date: dateCorrectFormat, userId };
-      console.log("values", values);
       try {
         const response = await api.post("/transactions", { ...values });
         alert(response.data);
-        console.log(response.data);
-        // setDate("");
-        // reset();
       } catch (err) {
         alert(err.message);
       }
@@ -132,6 +135,8 @@ export default function NewTransaction({
               id="dateForm"
               placeholder="00/00/0000"
               type="date"
+              // max={"2023-03-30"}
+              // min={"2023-03-24"}
               onChange={(e) => {
                 setDate(e.target.value),
                   errorDateInput && setErrorDateInput(false);
@@ -168,12 +173,14 @@ export default function NewTransaction({
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  const response = await api.get(`/categories?id=${session.user.id}`);
+  const response = await api.get(`/categories?id=${session?.user.id}`);
+  const profileResponse = await api.get(`/profile/${session?.user.id}`);
 
   return {
     props: {
       userId: session.user.id,
       categories: response.data,
+      profile: profileResponse.data,
     },
   };
 }

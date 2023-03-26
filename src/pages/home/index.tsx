@@ -35,13 +35,14 @@ type User = {
 interface ReportsProps {
   month: string;
   amount: number;
+  monthInNumber: number;
   salaryType: "quinzenal" | "mensal";
   salaryOneDate: string;
   salaryTwoDate: string;
 }
 
 export default function Home({ data, userId }) {
-  const { status, data: sesssion } = useSession();
+  const { status } = useSession();
   const [today, setToday] = useState<Date>(new Date());
   const [reports, setReports] = useState<ReportsProps[]>([] as ReportsProps[]);
 
@@ -86,7 +87,7 @@ export default function Home({ data, userId }) {
         <Wrapper>
           <YearSelect onChangeYear={handleChangeYears} date={today} />
           {reports.length > 0 ? (
-            <TransactionTable type="months" data={reports} />
+            <TransactionTable type="months" data={reports} year={today} />
           ) : (
             <p>Não há dado nenhum para o ano selecionado.</p>
           )}

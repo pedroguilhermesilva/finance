@@ -55,7 +55,6 @@ export default function Perfil({ userId }: { userId: string }) {
         salaryTwoDate: values.date2 ? values.date2 : null,
         salaryTwoValue: values.salary2 ? Number(values.salary2) : null,
       });
-      console.log(response.data);
       alert(response.data);
       setDate("");
       setDate2("");
