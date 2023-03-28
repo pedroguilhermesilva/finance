@@ -56,16 +56,24 @@ const payments = {
   title: ["Título", "Preço", "Categoria", "Data", ""],
   value: [
     {
-      title: "Desenvolvimento",
-      price: 12000,
-      category: "Venda",
-      date: "2021-04-14",
+      date: "2023-03-19T00:00:00.000Z",
+      categories: {
+        title: "Itau",
+        id: "e2576a50-010d-47b5-b1c8-50791171aa77",
+      },
+      price: "100",
+      id: "92fbfbed-fcaf-4da6-8d2f-04b8ea79586d",
+      title: "Teste",
     },
     {
-      title: "Carro",
-      price: 12000,
-      category: "Venda",
-      date: "2021-04-14",
+      date: "2023-03-19T00:00:00.000Z",
+      categories: {
+        title: "Itau",
+        id: "e2576a50-010d-47b5-b1c8-50791171aa77",
+      },
+      price: "100",
+      id: "92fbfbed-fcaf-4da6-8d2f-04b8ea79586d",
+      title: "Teste",
     },
   ],
 };
