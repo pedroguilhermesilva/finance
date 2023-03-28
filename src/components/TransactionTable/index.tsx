@@ -5,11 +5,23 @@ import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 
 import { months, payments } from "./typeTable";
-import { format, getDay, getYear } from "date-fns";
+import { format, getYear } from "date-fns";
 
 import * as S from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+interface CategoriesProps {
+  id: string;
+  title: string;
+}
+
+interface TransactionsProps {
+  categories: CategoriesProps;
+  date: string;
+  id: string;
+  price: string;
+  title: string;
+}
 interface DataProps {
   month: string;
   amount: number;
@@ -21,7 +33,7 @@ interface DataProps {
 
 interface TransactionTableProps {
   type: "months" | "payments";
-  data: DataProps[];
+  data: DataProps[] | TransactionTableProps[];
   year?: Date;
 }
 
@@ -42,18 +54,10 @@ const monthsNames = {
 
 export function TransactionTable({ type, data, year }: TransactionTableProps) {
   const [typePayment, setTypePayment] = useState("all");
+  const [tableType, setTableType] = useState([]);
 
   const router = useRouter();
-  let tableType;
-
-  switch (type) {
-    case "months":
-      tableType = data;
-      break;
-    case "payments":
-      tableType = payments;
-      break;
-  }
+  let tableTitle: string[];
 
   function goToPage(value) {
     router.push(
@@ -73,110 +77,127 @@ export function TransactionTable({ type, data, year }: TransactionTableProps) {
   }
 
   function changeValuesByMonth(e, index, month) {
-    let type: string;
-    transformerFormattedDateYearAndMonth(data[index].salaryOneDate, month);
-    transformerFormattedDateYearAndMonth(data[index].salaryTwoDate, month);
+    let setType: string;
+
+    transformerFormattedDateYearAndMonth(tableType[index].salaryOneDate, month);
+    transformerFormattedDateYearAndMonth(tableType[index].salaryTwoDate, month);
 
     switch (e.target.value) {
       case "Todos":
-        type = "all";
+        setType = "all";
         break;
-      case data[index].salaryOneDate:
-        type = `${transformerFormattedDateYearAndMonth(
-          data[index].salaryOneDate,
+      case tableType[index].salaryOneDate:
+        setType = `${transformerFormattedDateYearAndMonth(
+          tableType[index].salaryOneDate,
           month
         )}`;
         break;
-      case data[index].salaryTwoDate:
-        type = `${transformerFormattedDateYearAndMonth(
-          data[index].salaryTwoDate,
+      case tableType[index].salaryTwoDate:
+        setType = `${transformerFormattedDateYearAndMonth(
+          tableType[index].salaryTwoDate,
           month
         )}`;
         break;
     }
 
-    setTypePayment(type);
+    setTypePayment(setType);
   }
 
   function removeValue(value) {
     console.log(value);
   }
 
+  useEffect(() => {
+    if (data) {
+      type === "months"
+        ? (tableTitle = months.title)
+        : (tableTitle = payments.title);
+      setTableType(data);
+    }
+  }, [data]);
+
   return (
     <S.Wrapper mouseNotPointer={type === "months"}>
-      <table>
-        <thead>
-          <tr>
-            {tableType.title?.map((menu, index) => (
-              <th key={index}>{menu}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {type === "months" ? (
-            <>
-              {tableType?.map((values, index) => (
-                <tr key={index}>
-                  <td onClick={() => goToPage(values.month)}>{values.month}</td>
-                  <td
-                    onClick={() => goToPage(values.month)}
-                    className="deposit"
-                  >
-                    {formatCurrency(values.amount)}
-                  </td>
-                  <td>
-                    <select
-                      onChange={(value) =>
-                        changeValuesByMonth(value, index, values.month)
-                      }
-                      disabled={values.salaryType === "mensal"}
-                      defaultValue={typePayment}
+      {tableType.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              {tableTitle?.map((menu, index) => (
+                <th key={index}>{menu}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {type === "months" ? (
+              <>
+                {tableType?.map((values, index) => (
+                  <tr key={index}>
+                    <td onClick={() => goToPage(values.month)}>
+                      {values.month}
+                    </td>
+                    <td
+                      onClick={() => goToPage(values.month)}
+                      className="deposit"
                     >
-                      {values.salaryType !== "mensal" ? (
-                        <>
-                          <option value="Todos" defaultChecked>
-                            Todos
+                      {formatCurrency(values.amount)}
+                    </td>
+                    <td>
+                      <select
+                        onChange={(value) =>
+                          changeValuesByMonth(value, index, values.month)
+                        }
+                        disabled={values.salaryType === "mensal"}
+                        defaultValue={typePayment}
+                      >
+                        {values.salaryType !== "mensal" ? (
+                          <>
+                            <option value="Todos" defaultChecked>
+                              Todos
+                            </option>
+                            <option value={values.salaryOneDate}>
+                              {format(new Date(values.salaryOneDate), "dd/MM")}
+                            </option>
+                            <option value={values.salaryTwoDate}>
+                              {format(new Date(values.salaryTwoDate), "dd/MM")}
+                            </option>
+                          </>
+                        ) : (
+                          <option value={values.salaryOneDate} defaultChecked>
+                            {format(
+                              new Date(values.salaryOneDate),
+                              "dd/MM/yyyy"
+                            )}
                           </option>
-                          <option value={values.salaryOneDate}>
-                            {format(new Date(values.salaryOneDate), "dd/MM")}
-                          </option>
-                          <option value={values.salaryTwoDate}>
-                            {format(new Date(values.salaryTwoDate), "dd/MM")}
-                          </option>
-                        </>
-                      ) : (
-                        <option value={values.salaryOneDate} defaultChecked>
-                          {format(new Date(values.salaryOneDate), "dd/MM/yyyy")}
-                        </option>
-                      )}
-                    </select>
-                  </td>
-                </tr>
-              ))}
-            </>
-          ) : (
-            <>
-              {tableType.value.map((values, index) => (
-                <tr key={index}>
-                  <td>{values.title}</td>
-                  <td className="deposit">{formatCurrency(values.price)}</td>
-                  <td>{values.category}</td>
-                  <td>{formatDate(values.date)}</td>
-                  <td>
-                    <MdRemoveCircleOutline
-                      className="remove-transaction-icon"
-                      size={25}
-                      color="#c70a0a"
-                      onClick={() => removeValue(values)}
-                      cursor="pointer"
-                    />
-                  </td>
-                </tr>
-              ))}
-            </>
-          )}
-        </tbody>
-      </table>
+                        )}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ) : (
+              <>
+                {tableType.map((values, index) => (
+                  <tr key={index}>
+                    <td>{values.title}</td>
+                    <td className="deposit">{formatCurrency(values.price)}</td>
+                    <td>{values.categories.title}</td>
+                    <td>{formatDate(values.date)}</td>
+                    <td>
+                      <MdRemoveCircleOutline
+                        className="remove-transaction-icon"
+                        size={25}
+                        color="#c70a0a"
+                        onClick={() => removeValue(values)}
+                        cursor="pointer"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </>
+            )}
+          </tbody>
+        </table>
+      )}
     </S.Wrapper>
   );
 }
